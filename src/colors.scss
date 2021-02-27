@@ -1,0 +1,45 @@
+$color-badge-dark: #000064;
+
+// Palette Map
+$palettes: (
+  'pillWhite': (
+    core: white,
+    10: $color-badge-dark,
+  ),
+  'pillYellow': (
+    core: yellow,
+    10: $color-badge-dark,
+  )
+);
+
+$badges-colors: (
+  'red': red,
+  'green': green,
+  'blue': blue,
+  'yellow': yellow,
+  'black': black,
+  'white': white,
+);
+
+@function badges($badge: 'red') {
+  @return map-get($badges-colors, $badge);
+}
+
+
+// color() mixin:
+/////////////////////////////////////////////////////
+// Gets the specified color from the color palette //
+//                                                 //
+// Usage:                                          //
+//  background: color('blue', 80); // #1D3649      //
+//  background: color('blue', 8);  // #1D3649      //
+//  background: color('blue');     // #4178BE      //
+/////////////////////////////////////////////////////
+@function color($color, $tone: 'core') {
+  @if type-of($tone) == 'number' {
+    @if $tone % 10 == $tone {
+      $tone: $tone * 10;
+    }
+  }
+  @return map-get(map-get($palettes, $color), $tone);
+}
